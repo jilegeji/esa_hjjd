@@ -4,8 +4,9 @@
             <strong>{{ row.name }}</strong>
         </template>
         <template slot-scope="{ row, index }" slot="action">
-            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">View</Button>
-            <Button type="error" size="small" @click="remove(index)">Delete</Button>
+            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">情绪报告</Button>
+            <Button type="primary" size="small" style="margin-right: 5px" @click="show(index)">查看</Button>
+            <Button type="error" size="small" @click="remove(index)">删除</Button>
         </template>
     </Table>
 </template>
@@ -29,7 +30,7 @@
                     {
                         title: 'Action',
                         slot: 'action',
-                        width: 150,
+                        width: 250,
                         align: 'center'
                     }
                 ],
@@ -65,7 +66,13 @@
                 })
             },
             remove (index) {
-                this.data6.splice(index, 1);
+                this.$Modal.confirm({
+                    title: '警告',
+                    content: '确定删除此数据?',
+                    onOk: () => {
+                        this.data6.splice(index, 1);
+                    },
+                });
             }
         }
     }

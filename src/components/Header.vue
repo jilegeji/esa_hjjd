@@ -1,13 +1,17 @@
 <template>
-  <Header>
-    <Row type="flex" justify="end">
-      <Col span="14">
-        <Row type="flex" justify="start" align="middle">
-          <Col span="1" style="line-height:80px;text-align:center;height:80px">
-          </Col>
-          <Col span="23" style="line-height:0px">
-            <p class="systemTitle">{{website.title.header}}</p>
-            <p class="systemTitle" style="margin-top:20px;">Operational Maintenance System</p>
+  <Header style="background-color:#338ae6;vertical-align:middle;">
+    <Row type="flex" align="middle">
+      <Col span="12">
+        <div style="position:relative;height:80px;">
+          <img style="position:absolute;top:0;bottom:0;margin:auto;" src="../assets/images/login/logo.png"/>
+        </div>
+      </Col>
+      <Col span="12">
+        <Row type="flex" justify="end" align="middle">
+          <Col>
+            <Button type="warning" style="margin-right:25px;">添加人员</Button>
+            <Button type="warning" style="margin-right:25px;">修改密码</Button>
+            <Button type="error" @click="exit()">退出</Button>
           </Col>
         </Row>
       </Col>
@@ -16,6 +20,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import store from '@/store'
 
 export default {
   name: 'CHeader',
@@ -25,14 +30,15 @@ export default {
   components: {
   },
   props: {
-    system: {type: Boolean, default: true, required: false}
+  },
+  methods: {
+    exit() {
+      console.log("exit system!");
+      store.commit('SET_TOKEN', "");
+      this.$router.replace({path: '/login'})
+    }
   }
 }
 </script>
 <style scoped>
-  .systemTitle{
-    color: white !important;
-    font-size: 16px !important;
-    font-family: "Microsoft YaHei",微软雅黑,"MicrosoftJhengHei",华文细黑,STHeiti,MingLiu
-  }
 </style>
