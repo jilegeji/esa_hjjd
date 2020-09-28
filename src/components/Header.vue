@@ -9,7 +9,8 @@
       <Col span="12">
         <Row type="flex" justify="end" align="middle">
           <Col>
-            <Button type="warning" style="margin-right:25px;">添加人员</Button>
+            <Button v-show="showBack" @click="back()" type="warning" style="margin-right:25px;">返回</Button>
+            <Button v-show="showAdd" type="warning" style="margin-right:25px;">添加人员</Button>
             <Button type="warning" style="margin-right:25px;">修改密码</Button>
             <Button type="error" @click="exit()">退出</Button>
           </Col>
@@ -30,8 +31,20 @@ export default {
   components: {
   },
   props: {
+    showBack :{
+      type: Boolean,
+      default: false
+    },
+    showAdd :{
+      type: Boolean,
+      default: false
+    },
   },
   methods: {
+    back() {
+      console.log("back!");
+      this.$router.replace({path: '/main/accountList'})
+    },
     exit() {
       console.log("exit system!");
       store.commit('SET_TOKEN', "");
