@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CHeader :showBack="false" :showAdd="true" :style="{'z-index':1000,position: 'fixed',width:'100%', height: '80px', top: 0,left: 0}"/>
+        <CHeader :showBack="false" :showAdd="true" :style="{'z-index':1000,position: 'fixed',width:'100%', height: '80px', top: 0,left: 0}"  @modifyPasswordClick="toggleModifyPasswordShowStatus()"/>
         <Layout :style="{marginTop:'80px', overflow: 'auto'}">
             <Content style="overflow:auto">
                 <Search/>
@@ -21,17 +21,26 @@
                 </Row>
             </Content>
         </Layout>
+        <ModifyPassword :showStatus="modifyPasswordShowStatus" @modifyPasswordClose="toggleModifyPasswordShowStatus()"></ModifyPassword>
     </div>
 </template>
 <script>
 import CHeader from '@/components/Header.vue'
 import Search from '@/components/Search.vue'
 import CPage from '@/components/Page.vue'
+import ModifyPassword from '@/views/main/ModifyPassword'
 
 export default {
     data () {
         return {
+            modifyPasswordShowStatus:false,
             columns12: [
+                {
+                    type: 'index',
+                    width: 100,
+                    align: 'center',
+                    title: '序号'
+                },
                 {
                     title: 'Name',
                     slot: 'name'
@@ -193,10 +202,13 @@ export default {
                     this.data6.splice(index, 1);
                 },
             });
+        },
+        toggleModifyPasswordShowStatus(){
+            this.modifyPasswordShowStatus = !this.modifyPasswordShowStatus
         }
     },
     components: {
-        CHeader,Search,CPage
+        CHeader,Search,CPage,ModifyPassword
     }
 }
 </script>

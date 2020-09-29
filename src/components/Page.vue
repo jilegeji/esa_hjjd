@@ -18,7 +18,7 @@ export default {
       default: () => ({
         current: 1, size: 10, total: 1
       }),
-      required: true
+      required: false //原来是true，如果有问题的话，要注意这里。
     },
     sizeOpts: {
       type: Array,

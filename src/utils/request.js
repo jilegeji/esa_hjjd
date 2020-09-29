@@ -18,8 +18,9 @@ axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded
  */
 axios.interceptors.request.use(config => {
   NProgress.start()
-  if (store.state.access_token) config.headers['Authorization'] = 'Bearer '
-
+  if (sessionStorage.getItem('token')) {
+    config.headers['token'] = sessionStorage.getItem('token');
+  }
   return config
 }, error => {
   return Promise.reject(error)

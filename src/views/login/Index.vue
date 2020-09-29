@@ -35,6 +35,7 @@ import store from '@/store'
 import { Message } from 'view-design'
 import website from '@/const/website'
 import {mapState} from 'vuex'
+import { loginByNameAndPassword } from '@/api/login'
 export default {
   name: 'Login',
   computed: {
@@ -90,9 +91,17 @@ export default {
 
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-          //执行登陆逻辑
-         store.commit('SET_TOKEN', "testToken");
-         this.$router.replace({path: '/'})
+        //store.commit('SET_TOKEN', "testToken");
+        loginByNameAndPassword(this.loginForm.username,this.loginForm.password).then(data => {
+          console.log(data);
+          if (data.isSuccess) {
+            sessionStorage.setItem("token", data.message);  //添加到sessionStorage
+            this.$router.replace({path: '/'})
+          }else{
+            this.isDisabled = false
+            Message.error(data.message)
+          }
+        })
         } else {
           this.isDisabled = false
         }

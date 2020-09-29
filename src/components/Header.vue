@@ -11,7 +11,7 @@
           <Col>
             <Button v-show="showBack" @click="back()" type="warning" style="margin-right:25px;">返回</Button>
             <Button v-show="showAdd" type="warning" style="margin-right:25px;">添加人员</Button>
-            <Button type="warning" style="margin-right:25px;">修改密码</Button>
+            <Button type="warning" @click="modifyPassword()" style="margin-right:25px;">修改密码</Button>
             <Button type="error" @click="exit()">退出</Button>
           </Col>
         </Row>
@@ -45,9 +45,12 @@ export default {
       console.log("back!");
       this.$router.replace({path: '/main/accountList'})
     },
+    modifyPassword() {
+      this.$emit('modifyPasswordClick');
+    },
     exit() {
       console.log("exit system!");
-      store.commit('SET_TOKEN', "");
+      sessionStorage.removeItem("token");
       this.$router.replace({path: '/login'})
     }
   }

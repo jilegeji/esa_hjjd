@@ -7,12 +7,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
     website: website,
-    access_token: ''
+    //token: ''
   },
   mutations: {
-    SET_TOKEN: (state, h) => {
-      state.access_token = h;
-    },
+    // SET_TOKEN: (state, h) => {
+    //   state.token = h;
+    // },
   },
   actions: {
   },
