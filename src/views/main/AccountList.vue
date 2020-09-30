@@ -1,6 +1,6 @@
 <template>
     <div>
-        <CHeader :showBack="false" :showAdd="true" :style="{'z-index':1000,position: 'fixed',width:'100%', height: '80px', top: 0,left: 0}"  @modifyPasswordClick="toggleModifyPasswordShowStatus()"/>
+        <CHeader :showBack="false" :showAdd="true" :style="{'z-index':1000,position: 'fixed',width:'100%', height: '80px', top: 0,left: 0}" @accountProfileClick="toggleAccountProfileShowStatus()" @modifyPasswordClick="toggleModifyPasswordShowStatus()"/>
         <Layout :style="{marginTop:'80px', overflow: 'auto'}">
             <Content style="overflow:auto">
                 <Search/>
@@ -21,18 +21,21 @@
                 </Row>
             </Content>
         </Layout>
+        <AccountProfile :showStatus="accountProfileStatus" @accountProfileClose="toggleAccountProfileShowStatus()"></AccountProfile>
         <ModifyPassword :showStatus="modifyPasswordShowStatus" @modifyPasswordClose="toggleModifyPasswordShowStatus()"></ModifyPassword>
     </div>
 </template>
 <script>
-import CHeader from '@/components/Header.vue'
-import Search from '@/components/Search.vue'
-import CPage from '@/components/Page.vue'
-import ModifyPassword from '@/views/main/ModifyPassword'
+import CHeader from '@/components/common/Header.vue'
+import Search from '@/components/common/Search.vue'
+import CPage from '@/components/common/Page.vue'
+import ModifyPassword from '@/components/common/ModifyPassword'
+import AccountProfile from '@/components/account/AccountProfile'
 
 export default {
     data () {
         return {
+            accountProfileStatus:false,
             modifyPasswordShowStatus:false,
             columns12: [
                 {
@@ -203,12 +206,15 @@ export default {
                 },
             });
         },
+        toggleAccountProfileShowStatus(){
+            this.accountProfileStatus = !this.accountProfileStatus
+        },
         toggleModifyPasswordShowStatus(){
             this.modifyPasswordShowStatus = !this.modifyPasswordShowStatus
         }
     },
     components: {
-        CHeader,Search,CPage,ModifyPassword
+        CHeader,Search,CPage,ModifyPassword,AccountProfile
     }
 }
 </script>

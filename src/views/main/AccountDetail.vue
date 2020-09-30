@@ -9,7 +9,7 @@
     </div>
 </template>
 <script>
-import CHeader from '@/components/Header.vue'
+import CHeader from '@/components/common/Header.vue'
 
 export default {
     data () {

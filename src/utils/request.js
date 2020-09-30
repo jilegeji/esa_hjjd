@@ -31,6 +31,12 @@ axios.interceptors.request.use(config => {
  */
 axios.interceptors.response.use(data => {
   NProgress.done()
+  if(data.data.code === 401){
+    Message.error("登录已失效,请重新登陆!");
+    sessionStorage.removeItem("token");
+    sessionStorage.removeItem("loginName");
+    router.replace({path: '/login'})
+  }
   return data.data
 }, error => {
   NProgress.done()
@@ -47,7 +53,7 @@ axios.interceptors.response.use(data => {
     router.replace({path: '/403'})
   }
 
-  return Promise.reject(new Error(error))
+  return Promise.reject(new Error("axios 数据返回拦截报错!"))
 })
 
 export default axios
