@@ -46,7 +46,7 @@ export default {
       this.$router.replace({path: '/main/accountList'})
     },
     addAccount() {
-      this.$emit('accountProfileClick');
+      this.$emit('accountProfileClick','add');
     },
     modifyPassword() {
       this.$emit('modifyPasswordClick');

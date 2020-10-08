@@ -75,19 +75,19 @@ export default {
             this.$refs.modifyPasswordForm.validate((valid) => {
                 if (valid) {
                     modifyPassword(this.modifyPasswordForm.oldPassword,this.modifyPasswordForm.newPassword).then(data => {
-                    console.log(data);
-                    if (data.isSuccess) {
-                        this.$Message.success('修改成功!');
-                        this.$emit('modifyPasswordClose');
-                    }else{
-                        this.$Message.error(data.message);
-                        //表单规则验证失败后，按钮无法点击，处于loading状态。
-                        //官方目前没有解决方案
-                        this.loading = false;
-                        setTimeout(() => {
-                            this.loading = true
-                        }, 0)
-                    }
+                        console.log(data);
+                        if (data.isSuccess) {
+                            this.$Message.success('修改成功!');
+                            this.$emit('modifyPasswordClose');
+                        }else{
+                            this.$Message.error(data.message);
+                            //表单规则验证失败后，按钮无法点击，处于loading状态。
+                            //官方目前没有解决方案
+                            this.loading = false;
+                            setTimeout(() => {
+                                this.loading = true
+                            }, 0)
+                        }
                     })
                 } else {
                     //表单规则验证失败后，按钮无法点击，处于loading状态。
@@ -114,8 +114,9 @@ export default {
         },
         visibleChange() {
             if(this.showStatus==false) {
-                this.modifyPasswordForm.oldPassword = '';
-                this.modifyPasswordForm.newPassword = '';
+                // this.modifyPasswordForm.oldPassword = '';
+                // this.modifyPasswordForm.newPassword = '';
+                this.$refs.modifyPasswordForm.resetFields();
             }
         }
     }

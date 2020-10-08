@@ -93,18 +93,20 @@ export default {
 
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-        //store.commit('SET_TOKEN', "testToken");
-        loginByNameAndPassword(this.loginForm.username,this.loginForm.password).then(data => {
-          console.log(data);
-          if (data.isSuccess) {
-            sessionStorage.setItem("token", data.message);  //添加到sessionStorage
-            sessionStorage.setItem("loginName", this.loginForm.username);
-            this.$router.replace({path: '/'})
-          }else{
-            this.isDisabled = false
-            Message.error(data.message)
-          }
-        })
+        sessionStorage.setItem("token", "testToken");  //添加到sessionStorage
+        sessionStorage.setItem("loginName", "admin");
+        this.$router.replace({path: '/'})
+        // loginByNameAndPassword(this.loginForm.username,this.loginForm.password).then(data => {
+        //   console.log(data);
+        //   if (data.isSuccess) {
+        //     sessionStorage.setItem("token", data.message);  //添加到sessionStorage
+        //     sessionStorage.setItem("loginName", this.loginForm.username);
+        //     this.$router.replace({path: '/'})
+        //   }else{
+        //     this.isDisabled = false
+        //     Message.error(data.message)
+        //   }
+        // })
         } else {
           this.isDisabled = false
         }

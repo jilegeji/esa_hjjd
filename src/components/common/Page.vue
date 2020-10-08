@@ -16,13 +16,13 @@ export default {
     value: {
       type: Object,
       default: () => ({
-        current: 1, size: 10, total: 1
+        current: 1, size: 10, total: 0
       }),
       required: false //原来是true，如果有问题的话，要注意这里。
     },
     sizeOpts: {
       type: Array,
-      default: () => ([10, 20, 30, 40]),
+      default: () => ([2, 5, 10, 20, 30, 40, 50]),
       required: false
     }
   },
@@ -40,7 +40,7 @@ export default {
   },
   data: function () {
     return {
-      pageQuery: {current: 1, size: 10, total: 100}
+      pageQuery: {current: 1, size: 10, total: 0}
     }
   },
   created () {
@@ -56,7 +56,7 @@ export default {
     },
     rest () {
       this.pageQuery.current = 1
-      // this.pageQuery.size = 10
+      //this.pageQuery.size = 10
     }
   }
 }

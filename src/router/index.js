@@ -26,7 +26,7 @@ const routes = [
         component: AccountList
       },
       {
-        path: 'accountDetail/:cardNo',
+        path: 'accountDetail',
         component: AccountDetail
       }
     ]
