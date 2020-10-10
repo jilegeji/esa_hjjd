@@ -21,7 +21,7 @@
                 </Row>
             </Content>
         </Layout>
-        <AccountProfile :accountForm="accountInfo" :type="accountProfileType" :showStatus="accountProfileStatus" @accountProfileClose="toggleAccountProfileShowStatus()" @refreshList="search()"></AccountProfile>
+        <AccountProfile :originAccountForm="accountInfo" :type="accountProfileType" :showStatus="accountProfileStatus" @accountProfileClose="toggleAccountProfileShowStatus()" @refreshList="search()"></AccountProfile>
         <ModifyPassword :showStatus="modifyPasswordShowStatus" @modifyPasswordClose="toggleModifyPasswordShowStatus()"></ModifyPassword>
     </div>
 </template>
@@ -177,7 +177,6 @@ export default {
         initList () {
             this.listLoading = true;
             listAccount(this.listQuery).then(data => {
-                console.log(data);
                 this.tableData = data.rows;
                 this.listQuery = Object.assign({},this.listQuery, {total: data.total});
                 this.listLoading = false;

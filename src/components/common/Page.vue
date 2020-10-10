@@ -22,7 +22,7 @@ export default {
     },
     sizeOpts: {
       type: Array,
-      default: () => ([2, 5, 10, 20, 30, 40, 50]),
+      default: () => ([10, 20, 30, 40, 50]),
       required: false
     }
   },

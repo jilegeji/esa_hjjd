@@ -16,6 +16,14 @@ export const listAccount = (query) => {
   })
 }
 
+export const modifyAccount = (params) => {
+  return request({
+    url: 'http://localhost:9080/api/account/modify',
+    method: 'post',
+    params: params
+  })
+}
+
 export const delAccount = (cardNo) => {
   return request({
     url: 'http://localhost:9080/api/account/delete/' + cardNo,
