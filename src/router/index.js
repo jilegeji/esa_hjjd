@@ -17,17 +17,21 @@ const routes = [
     name: 'Main',
     component: Main,
     children: [
-      {
-        path: '',
-        redirect: 'accountList'
-      },
+      // {
+      //   path: '',
+      //   redirect: 'accountList'
+      // },
       {
         path: 'accountList',
-        component: AccountList
+        name: 'AccountList',
+        component: AccountList,
+        meta: {keepAlive: true}
       },
       {
         path: 'accountDetail',
-        component: AccountDetail
+        name: 'AccountDetail',
+        component: AccountDetail,
+        meta: {keepAlive: false}
       }
     ]
   },

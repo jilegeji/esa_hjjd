@@ -79,36 +79,32 @@ export default {
      */
     changePWType () {
       this.pwType = this.pwType === 'password' ? 'text' : 'password';
-      this.pwEyeType = this.pwEyeType === 'md-eye' ? 'md-eye-off' : 'md-eye'
+      this.pwEyeType = this.pwEyeType === 'md-eye' ? 'md-eye-off' : 'md-eye';
     },
     /**
      * 登录
      */
     loginHandle () {
-      if(!this.isIe()){
-        Message.error('请使用ie浏览器')
-        //return false;
-      };
+      // if(!this.isIe()){
+      //   Message.error('请使用ie浏览器')
+      //   return false;
+      // };
       this.isDisabled = true
 
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
-        sessionStorage.setItem("token", "testToken");  //添加到sessionStorage
-        sessionStorage.setItem("loginName", "admin");
-        this.$router.replace({path: '/'})
-        // loginByNameAndPassword(this.loginForm.username,this.loginForm.password).then(data => {
-        //   console.log(data);
-        //   if (data.isSuccess) {
-        //     sessionStorage.setItem("token", data.message);  //添加到sessionStorage
-        //     sessionStorage.setItem("loginName", this.loginForm.username);
-        //     this.$router.replace({path: '/'})
-        //   }else{
-        //     this.isDisabled = false
-        //     Message.error(data.message)
-        //   }
-        // })
+          loginByNameAndPassword(this.loginForm.username,this.loginForm.password).then(data => {
+            if (data.isSuccess) {
+              sessionStorage.setItem("token", data.message);  //添加到sessionStorage
+              sessionStorage.setItem("loginName", this.loginForm.username);
+              this.$router.replace({path: '/'});
+            }else{
+              this.isDisabled = false;
+              Message.error(data.message);
+            }
+          })
         } else {
-          this.isDisabled = false
+          this.isDisabled = false;
         }
       })
     },

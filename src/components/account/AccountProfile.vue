@@ -31,7 +31,7 @@
                 <Input v-model="accountForm.address" :readonly="inputReadonly"/>
             </FormItem>
             <FormItem label="身份证号" prop="cardNo">
-                <Input v-model="accountForm.cardNo" :readonly="inputReadonly"/>
+                <Input v-model="accountForm.cardNo" :readonly="inputReadonly"/> 
             </FormItem>
         </div>
       </Form>
@@ -86,11 +86,10 @@ export default {
     methods: {
         cancel () {
             this.$emit('accountProfileClose');
-            console.log('Clicked cancel');
         },
         visibleChange() {
             if(this.showStatus==false) {
-                //this.$refs.accountForm.resetFields();
+                this.$refs.accountForm.resetFields();
             }
         },
         readIDCard() {
@@ -115,9 +114,9 @@ export default {
         },
         addAccount(params){
             insertAccount(params).then(data => {
-                console.log(data);
-                if (data.isSuccess) {
+                if (data.result) {
                     this.$Message.success('身份证录入成功!');
+                    this.$emit("refreshList");
                 }else{
                     this.$Message.error(data.message);
                     this.$refs.accountForm.resetFields();
@@ -125,9 +124,11 @@ export default {
                     //官方目前没有解决方案
                     this.loading = false;
                     setTimeout(() => {
-                        this.loading = true
+                        this.loading = true;
                     }, 0)
                 }
+            }).catch((error)=>{
+                console.error(error)
             })
         },
     }

@@ -30,6 +30,7 @@
 import CHeader from '@/components/common/Header.vue'
 
 export default {
+    name: 'AccountDetail',
     data () {
         return {
         }
@@ -37,10 +38,10 @@ export default {
     methods: {
     },
     created() {
-        console.log("AccountDetail created")
+        console.log("AccountDetail created");
     },
     activated() {
-        console.log("AccountDetail activated")
+        console.log("AccountDetail activated");
     },
     components: {
         CHeader

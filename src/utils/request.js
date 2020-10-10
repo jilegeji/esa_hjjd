@@ -21,6 +21,11 @@ axios.interceptors.request.use(config => {
   if (sessionStorage.getItem('token')) {
     config.headers['token'] = sessionStorage.getItem('token');
   }
+  //解决get请求缓存
+  let url = config.url
+  if(config.method === 'get'){
+    url.indexOf('?') === -1 ? config.url = url+'?_='+(new Date().getTime()) : config.url = url+'&_='+(new Date().getTime())
+  }
   return config
 }, error => {
   return Promise.reject(error)

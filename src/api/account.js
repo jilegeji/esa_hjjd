@@ -7,3 +7,18 @@ export const insertAccount = (params) => {
     params: params
   })
 }
+
+export const listAccount = (query) => {
+  return request({
+    url: 'http://localhost:9080/api/account/list',
+    method: 'get',
+    params: query
+  })
+}
+
+export const delAccount = (cardNo) => {
+  return request({
+    url: 'http://localhost:9080/api/account/delete/' + cardNo,
+    method: 'delete'
+  })
+}

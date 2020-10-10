@@ -42,8 +42,7 @@ export default {
   },
   methods: {
     back() {
-      console.log("back!");
-      this.$router.replace({path: '/main/accountList'})
+      this.$router.replace({path: '/main/accountList'});
     },
     addAccount() {
       this.$emit('accountProfileClick','add');
@@ -52,10 +51,9 @@ export default {
       this.$emit('modifyPasswordClick');
     },
     exit() {
-      console.log("exit system!");
       sessionStorage.removeItem("token");
       sessionStorage.removeItem("loginName");
-      this.$router.replace({path: '/login'})
+      this.$router.replace({path: '/login'});
     }
   }
 }

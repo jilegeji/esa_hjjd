@@ -36,14 +36,12 @@ export default {
     },
     data () {
         const validateOldPassword = (rule, value, callback) => {
-            console.log('validateOldPassword');
             if (value === '') {
                 callback(new Error('请输入旧密码!'));
             } 
             callback();
         };
         const validateNewPassword = (rule, value, callback) => {
-            console.log('validateNewPassword');
             if (value === '') {
                 callback(new Error('请输入新密码!'));
             } else if (value.length<6) {
@@ -75,7 +73,6 @@ export default {
             this.$refs.modifyPasswordForm.validate((valid) => {
                 if (valid) {
                     modifyPassword(this.modifyPasswordForm.oldPassword,this.modifyPasswordForm.newPassword).then(data => {
-                        console.log(data);
                         if (data.isSuccess) {
                             this.$Message.success('修改成功!');
                             this.$emit('modifyPasswordClose');
@@ -98,11 +95,9 @@ export default {
                     }, 0)
                 }
             });
-            console.log('Clicked ok');
         },
         cancel () {
             this.$emit('modifyPasswordClose');
-            console.log('Clicked cancel');
         },
         changeOldPasswordType () {
             this.oldPasswordType = this.oldPasswordType === 'password' ? 'text' : 'password';

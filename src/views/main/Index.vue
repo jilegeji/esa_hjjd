@@ -2,8 +2,9 @@
   <div class="layout" style="width:100%;height:100%">
         <Layout style="width:100%;height:100%">
           <keep-alive>
-            <router-view></router-view>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
           </keep-alive>
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
         </Layout>
     </div>
 </template>
@@ -16,6 +17,9 @@ export default {
     }
   },
   components: {
+  },
+  created() {
+    this.$router.replace("/main/accountList");
   }
 }
 </script>
