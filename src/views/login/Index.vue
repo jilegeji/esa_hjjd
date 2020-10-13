@@ -85,10 +85,10 @@ export default {
      * 登录
      */
     loginHandle () {
-      // if(!this.isIe()){
-      //   Message.error('请使用ie浏览器')
-      //   return false;
-      // };
+      if(!this.isIe()){
+        Message.error('请使用ie浏览器')
+        return false;
+      };
       this.isDisabled = true
 
       this.$refs.loginForm.validate((valid) => {
