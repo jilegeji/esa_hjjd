@@ -8,7 +8,7 @@
     </div>
     <Row class="content">
       <Col offset="9" span="6">
-        <Card class="animated fadeInRight">
+        <Card class="animate__animated animate__fadeInRight">
           <p slot="title"> {{website.title.login}} </p>
           <Form ref="loginForm" :rules="loginRules" :model="loginForm">
             <FormItem prop="username">
