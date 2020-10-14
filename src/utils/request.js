@@ -45,19 +45,11 @@ axios.interceptors.response.use(data => {
   return data.data
 }, error => {
   NProgress.done()
-
   // 提示错误信息
   let errMsg = error.toString()
-  console.error('jmonkey request error:' + errMsg)
+  console.error('request error:' + errMsg)
   let code = errMsg.substr(errMsg.indexOf('code') + 5)
   Message.error(errorCode[code] || errorCode['default'])
-
-  // token过期或无资源权限
-  if (code === '401' || code === '403') {
-    // store.dispatch('LogOut').then(() => { router.replace({ path: '/login' }) })
-    router.replace({path: '/403'})
-  }
-
   return Promise.reject(new Error("axios 数据返回拦截报错!"))
 })
 

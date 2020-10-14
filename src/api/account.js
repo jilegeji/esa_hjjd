@@ -1,6 +1,7 @@
 import request from '../utils/request'
 
-const preUrl = 'http://192.168.1.52:9080'
+// const preUrl = 'http://192.168.1.52:9080'
+const preUrl = 'http://localhost:9080'
 
 export const insertAccount = (params) => {
   return request({

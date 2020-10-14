@@ -177,8 +177,8 @@ export default {
         initList () {
             this.listLoading = true;
             listAccount(this.listQuery).then(data => {
-                this.tableData = data.rows;
-                this.listQuery = Object.assign({},this.listQuery, {total: data.total});
+                this.tableData = data.result.rows;
+                this.listQuery = Object.assign({},this.listQuery, {total: data.result.total});
                 this.listLoading = false;
             }).catch((error)=>{
                 console.error(error);

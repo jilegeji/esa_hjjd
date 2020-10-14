@@ -184,7 +184,6 @@ export default {
     },
     methods: {
         formatter(param) {
-            console.log(param);
             return [
                 '正向情绪最大值: ' + param.data[5],
                 '正向情绪平均值 ' + param.data[4],
@@ -203,7 +202,6 @@ export default {
                 this.thresholdArr.push(threshold);
                 window.thresholdArr = this.thresholdArr;
             }
-            console.log(this.thresholdArr);
         }
     },
     created() {

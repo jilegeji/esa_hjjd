@@ -10,7 +10,6 @@ NProgress.configure({ showSpinner: false })
  * TODO 在系统中禁用了 router history
  */
 router.beforeEach((to, from, next) => {
-  console.log("当前token为："+sessionStorage.getItem('token'))
   NProgress.start()
   if (sessionStorage.getItem('token')) {
     if (to.path === '/login') {
