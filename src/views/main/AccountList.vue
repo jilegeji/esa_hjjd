@@ -143,6 +143,7 @@ export default {
     },
     methods: {
         detail (index) {
+            //这里携带的参数过长，ie浏览器地址栏显示有问题，但不影响程序的正常运行，垃圾ie。
             this.$router.push({path:'/main/accountDetail',query:this.tableData[index]});
         },
         editInfo (index) {
