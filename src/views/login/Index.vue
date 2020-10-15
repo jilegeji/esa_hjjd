@@ -8,6 +8,7 @@
     </div>
     <Row class="content">
       <Col offset="9" span="6">
+        <!-- 注意4.0版本及以上每个类名前都要加上animate__。(ie浏览器中,dev模式下动画有效,build发布后无效,不清楚原因) -->
         <Card class="animate__animated animate__fadeInRight">
           <p slot="title"> {{website.title.login}} </p>
           <Form ref="loginForm" :rules="loginRules" :model="loginForm">
