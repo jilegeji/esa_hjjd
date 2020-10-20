@@ -77,10 +77,8 @@ export default {
                     }
                 },
                 dataZoom: [
-                    {
+                     {
                         type: 'inside',
-                        start: 0,
-                        end: 100
                     },
                     {
                         show: true,
@@ -88,9 +86,9 @@ export default {
                         type: 'slider',
                         top: '90%',
                         xAxisIndex: [0],
-                        start: 0,
-                        end: 20
+                        showDataShadow: false   //不显示拖拽条的阴影
                     }
+                    
                 ],
                 series: [
                     {
@@ -214,6 +212,8 @@ export default {
                 this.echart.showLoading()
                 getBoxPlotData(this.$route.query.cardNo).then((data) => {
                     this.echartsData.xAxis.data = data.result.xData;
+                    this.echartsData.dataZoom[0].startValue = data.result.xData.length-1>0?data.result.xData.length-1:0;
+                    this.echartsData.dataZoom[0].endValue = data.result.xData.length-7>0?data.result.xData.length-7:0;
                     this.echartsData.series[0].data = data.result.seriesBoxPlotData;
                     this.echartsData.series[1].data = data.result.seriesPositiveLineData;
                     this.echartsData.series[2].data = data.result.seriesNegativeLineData;
