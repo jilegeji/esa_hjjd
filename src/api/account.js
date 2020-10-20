@@ -35,7 +35,15 @@ export const delAccount = (cardNo) => {
 
 export const getBoxPlotData = (cardNo) => {
   return request({
-    url: preUrl+'/api/back/getBoxPlotData',
+    url: preUrl+'/api/account/getBoxPlotData',
+    method: 'post',
+    params: {"cardNo":cardNo}
+  })
+}
+
+export const getEmotionData = (cardNo) => {
+  return request({
+    url: preUrl+'/api/account/getEmotionData',
     method: 'post',
     params: {"cardNo":cardNo}
   })

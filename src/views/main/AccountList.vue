@@ -30,7 +30,7 @@ import CHeader from '@/components/common/Header.vue'
 import CPage from '@/components/common/Page.vue'
 import ModifyPassword from '@/components/common/ModifyPassword'
 import AccountProfile from '@/components/account/AccountProfile'
-import { listAccount, delAccount } from '@/api/account'
+import { listAccount, delAccount, getEmotionData } from '@/api/account'
 
 export default {
     name: 'AccountList',
@@ -71,7 +71,7 @@ export default {
                         return h('div', [
                             h('Icon', {
                                 props: {
-                                    type: 'person'
+                                    type: 'ios-person'
                                 }
                             }),
                             h('strong', params.row.name)
@@ -86,8 +86,60 @@ export default {
                     }
                 },
                 {
+                    title: '出生日期',
+                    key: 'birthday',
+                    render: (h, params) => { 
+                        return h('span', params.row.birthday.replace(/(.{4})(.{2})/,"$1-$2-"))
+                    }
+                },
+                {
                     title: '身份证号',
                     key: 'cardNo'
+                },
+                {
+                    title: '情绪表现',
+                    key: 'emotionData',
+                    width: 250,
+                    render: (h, params) => {
+                        if(params.row.emotionData){
+                            return h('div',{style: {height: '20px'}},[
+                                h('div', {
+                                    style: {
+                                        height: '100%',
+                                        width: parseInt(params.row.emotionData.negative)*100/(parseInt(params.row.emotionData.negative)+parseInt(params.row.emotionData.positive)) + '%',
+                                        backgroundColor: 'red',
+                                        float: 'left'
+                                    },
+                                }),
+                                h('div', {
+                                    style: {
+                                        height: '100%',
+                                        width: parseInt(params.row.emotionData.positive)*100/(parseInt(params.row.emotionData.negative)+parseInt(params.row.emotionData.positive)) + '%',
+                                        backgroundColor: 'green',
+                                        float: 'right'
+                                    },
+                                }),
+                            ])
+                        }else{
+                            return h('div',
+                                {
+                                    style: {
+                                        height: '20px',
+                                        textAlign: 'center'
+                                    },
+                                },
+                                [h('img', {
+                                    attrs: {
+                                        src: './images/account/loading.gif'
+                                    },
+                                    style: {
+                                        height: '20px',
+                                        width: '20px',
+                                    },
+                                })]
+                            )
+                        }
+                    }
                 },
                 {
                     title: '操作',
@@ -181,6 +233,9 @@ export default {
                 this.tableData = data.result.rows;
                 this.listQuery = Object.assign({},this.listQuery, {total: data.result.total});
                 this.listLoading = false;
+                this.$nextTick(()=>{
+                    this.asyncGetEmotionDatas();
+                })
             }).catch((error)=>{
                 console.error(error);
             })
@@ -189,6 +244,13 @@ export default {
             this.$refs.accountPage.rest();
             this.initList();
         },
+        asyncGetEmotionDatas() {
+            this.tableData.forEach((element,index) => {
+                getEmotionData(element.cardNo).then((data) => {
+                    element.emotionData = data.result
+                })
+            });
+        }
     },
     components: {
         CHeader,CPage,ModifyPassword,AccountProfile

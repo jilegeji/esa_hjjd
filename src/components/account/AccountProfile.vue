@@ -17,13 +17,13 @@
                     <Input v-model="accountForm.name" :readonly="inputReadonly"/>
                 </FormItem>
                 <FormItem label="性别" prop="gender">
-                    <Input :value="accountForm.gender | sexFormat" @input="accountForm.gender = $event.target.value" :readonly="inputReadonly" :disabled="!inputReadonly"/>
+                    <Input :value="accountForm.gender | sexFormat" :readonly="inputReadonly" :disabled="!inputReadonly"/>
                 </FormItem>
                 <FormItem label="民族" prop="nation">
                     <Input v-model="accountForm.nation" :readonly="inputReadonly"/>
                 </FormItem>
                 <FormItem label="出生" prop="birthday">
-                    <Input v-model="accountForm.birthday" :readonly="inputReadonly"/>
+                    <Input :value="accountForm.birthday | formatBirthday" :readonly="inputReadonly" :disabled="!inputReadonly"/>
                 </FormItem>
             </div>
         </div>
@@ -172,6 +172,9 @@ export default {
             if(val===0 ||  val==='0'){
                 return '女'
             }
+        },
+        formatBirthday: (birthday)=> {
+            return birthday.replace(/(.{4})(.{2})/,"$1-$2-")
         }
     }
 }

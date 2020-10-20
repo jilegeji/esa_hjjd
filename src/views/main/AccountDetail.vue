@@ -13,7 +13,7 @@
                                 <Col span="6"><div style="height:50px;display:flex;align-items:center;">姓名：{{$route.query.name}}</div></Col>
                                 <Col span="6"><div style="height:50px;display:flex;align-items:center;">性别：{{$route.query.gender | sexFormat}}</div></Col>
                                 <Col span="6"><div style="height:50px;display:flex;align-items:center;">民族：{{$route.query.nation}}</div></Col>
-                                <Col span="6"><div style="height:50px;display:flex;align-items:center;">出生日期：{{$route.query.birthday}}</div></Col>
+                                <Col span="6"><div style="height:50px;display:flex;align-items:center;">出生日期：{{$route.query.birthday | formatBirthday}}</div></Col>
                             </Row>
                             <Row>
                                 <Col><div style="height:50px;display:flex;align-items:center;">住址：{{$route.query.address}}</div></Col>
@@ -235,6 +235,9 @@ export default {
             if(val===0 ||  val==='0'){
                 return '女'
             }
+        },
+        formatBirthday: (birthday)=> {
+            return birthday.replace(/(.{4})(.{2})/,"$1-$2-")
         }
     }
 }
