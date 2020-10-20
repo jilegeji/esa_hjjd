@@ -79,6 +79,7 @@ export default {
                 dataZoom: [
                      {
                         type: 'inside',
+                        xAxisIndex: [0],
                     },
                     {
                         show: true,
