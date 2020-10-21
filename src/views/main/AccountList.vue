@@ -66,6 +66,7 @@ export default {
                 },
                 {
                     title: '姓名',
+                    width: 150,
                     key: 'name',
                     render: (h, params) => {
                         return h('div', [
@@ -79,10 +80,41 @@ export default {
                     }
                 },
                 {
+                    title: '头像',
+                    width: 150,
+                    key: 'picture',
+                    render: (h, params) => {
+                        return h('div',
+                            {
+                                style: {
+                                    height: '50px',
+                                    textAlign: 'center'
+                                },
+                            },
+                            [h('img', {
+                                attrs: {
+                                    src: 'data:image/jpeg;base64,'+params.row.picture
+                                },
+                                style: {
+                                    height: '50px',
+                                    width: '50px',
+                                },
+                            })]
+                        )
+                    }
+                },
+                {
                     title: '性别',
                     key: 'gender',
                     render: (h, params) => { 
                         return h('span', this.sexFilter[params.row.gender])
+                    }
+                },
+                {
+                    title: '民族',
+                    key: 'nation',
+                    render: (h, params) => { 
+                        return h('span', params.row.nation + '族')
                     }
                 },
                 {
@@ -144,7 +176,7 @@ export default {
                 {
                     title: '操作',
                     key: 'action',
-                    width: 250,
+                    width: 300,
                     align: 'center',
                     render: (h, params) => {
                         return h('div', [
