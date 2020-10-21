@@ -232,10 +232,14 @@ export default {
         formatter(param) {
             return [
                 this.echartsData.xAxis.data[param.dataIndex],
+                "<span style='color:#00FF00;'>" +
                 '正向情绪最大值: ' + this.echartsData.series[0].data[param.dataIndex][4],
-                '正向情绪平均值 ' + this.echartsData.series[0].data[param.dataIndex][3],
+                '正向情绪平均值 ' + this.echartsData.series[0].data[param.dataIndex][3]
+                + "</span>",
+                "<span style='color:red;'>" +
                 '负向情绪最大值: ' + this.echartsData.series[0].data[param.dataIndex][0],
-                '负向情绪平均值' + this.echartsData.series[0].data[param.dataIndex][1],
+                '负向情绪平均值' + this.echartsData.series[0].data[param.dataIndex][1]
+                + "</span>"
             ].join('<br/>');
         },
         //该计算方法有待改进，箱线图是从最大值到最小值都算。所以只求"中间箱子"的比例是不准确的
