@@ -100,10 +100,10 @@ export default {
                         boxWidth : 50,
                         zlevel: -1, //默认应该是0
                         data: [],
-                        silent: true,
-                        // tooltip: {
-                        //     formatter: this.formatter,
-                        // },
+                        // silent: true,
+                        tooltip: {
+                            formatter: this.formatter,
+                        },
                         itemStyle : {  
                             normal  : {  
                                 //第一种写法，这是理论上最标准的写法，但是不行。（右/下/左/上）
