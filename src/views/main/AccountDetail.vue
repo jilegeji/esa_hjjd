@@ -45,7 +45,7 @@ export default {
                 legend: {
                     data: ['箱线图', '正向平均情绪折线图', '负向平均情绪折线图']
                 },
-                 grid: {
+                grid: {
                     left: '10%',
                     top: '20%',
                     right: '10%',
@@ -95,8 +95,15 @@ export default {
                     {
                         name: '箱线图',
                         type: 'boxplot',
+                        animationDuration: 500,
+                        animationEasing: 'elasticOut',
+                        boxWidth : 50,
+                        zlevel: -1, //默认应该是0
                         data: [],
-                        tooltip: {formatter: this.formatter},
+                        silent: true,
+                        // tooltip: {
+                        //     formatter: this.formatter,
+                        // },
                         itemStyle : {  
                             normal  : {  
                                 //第一种写法，这是理论上最标准的写法，但是不行。（右/下/左/上）
@@ -156,6 +163,9 @@ export default {
                     {//正向情绪平均值曲线
                         name: '正向平均情绪折线图',
                         data: [],
+                        // tooltip: {
+                        //     formatter: this.formatter,
+                        // },
                         type: 'line',
                         itemStyle : {  
                             normal : {  
@@ -167,6 +177,9 @@ export default {
                     {//负向向情绪平均值曲线
                         name: '负向平均情绪折线图',
                         data: [],
+                        // tooltip: {
+                        //     formatter: this.formatter,
+                        // },
                         type: 'line',
                         itemStyle : {  
                             normal : {  
@@ -174,7 +187,41 @@ export default {
                                 borderColor:'red',
                             }  
                         },
-                    }
+                    },
+                    {
+                        name: '箱线图',
+                        animationDuration: 500,
+                        animationEasing: 'elasticOut',
+                        data: [],
+                        tooltip: {
+                            formatter: this.formatter,
+                        },
+                        barWidth : 50,
+                        type: 'bar',
+                        stack:'柱状图',
+                        itemStyle:{
+                            normal:{
+                                color:"green"
+                            },
+                        }
+                    },
+                    {
+                        name: '箱线图',
+                        animationDuration: 500,
+                        animationEasing: 'elasticOut',
+                        data: [],
+                        tooltip: {
+                            formatter: this.formatter,
+                        },
+                        barWidth : 50,
+                        type: 'bar',
+                        stack:'柱状图',
+                        itemStyle:{
+                            normal:{
+                                color:"red"
+                            },
+                        }
+                    },
                 ]
             }
         }
@@ -184,10 +231,11 @@ export default {
     methods: {
         formatter(param) {
             return [
-                '正向情绪最大值: ' + param.data[5],
-                '正向情绪平均值 ' + param.data[4],
-                '负向情绪最大值: ' + param.data[1],
-                '负向情绪平均值' + param.data[2],
+                this.echartsData.xAxis.data[param.dataIndex],
+                '正向情绪最大值: ' + this.echartsData.series[0].data[param.dataIndex][4],
+                '正向情绪平均值 ' + this.echartsData.series[0].data[param.dataIndex][3],
+                '负向情绪最大值: ' + this.echartsData.series[0].data[param.dataIndex][0],
+                '负向情绪平均值' + this.echartsData.series[0].data[param.dataIndex][1],
             ].join('<br/>');
         },
         //该计算方法有待改进，箱线图是从最大值到最小值都算。所以只求"中间箱子"的比例是不准确的
@@ -218,6 +266,8 @@ export default {
                     this.echartsData.series[0].data = data.result.seriesBoxPlotData;
                     this.echartsData.series[1].data = data.result.seriesPositiveLineData;
                     this.echartsData.series[2].data = data.result.seriesNegativeLineData;
+                    this.echartsData.series[3].data = data.result.seriesPositiveLineData;
+                    this.echartsData.series[4].data = data.result.seriesNegativeLineData;
                     //this.calcThreshold(data.result.seriesBoxPlotData);
                     this.echart.setOption(this.echartsData)
                     this.echart.hideLoading()
