@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div style="background:#f5f7f9 !important;">
         <div id="otherDiv">
             <CHeader :showBack="true" :showAdd="false" :style="{position: 'fixed',width:'100%', height: '80px', top: 0,left: 0,'z-index':1000}"/>
             <Layout :style="{marginTop:'80px', overflow: 'auto'}">
@@ -26,7 +26,8 @@
                 </Content>
             </Layout>
         </div>
-            <div id="echartsDiv" :style="'height:500px;width:90%;margin-left:5%;margin-top:100px;'"></div>
+            <div id="anxDiv" :style="'height:'+echartsDivHeight+'px;width:90%;margin-left:5%;margin-top:100px;'"></div>
+            <div id="echartsDiv" :style="'height:'+echartsDivHeight+'px;width:90%;margin-left:5%;margin-top:100px;'"></div>
     </div>
 </template>
 <script>
@@ -39,8 +40,71 @@ export default {
     data () {
         return {
             thresholdArr: [],
-            echart: null,
             echartsDivHeight: 0,
+            anxData: {
+                legend: {
+                    data: ['焦虑情绪折线图']
+                },
+                grid: {
+                    left: '10%',
+                    top: '20%',
+                    right: '10%',
+                    bottom: '15%',
+                    containLabel: true
+                },
+                tooltip: {
+                    trigger: 'item',
+                    axisPointer: {
+                        type: 'shadow'
+                    }
+                },
+                xAxis: {
+                    type: 'category',
+                    data: [],
+                    boundaryGap: true,
+                    nameGap: 30,
+                    splitLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    }
+                },
+                yAxis: {
+                    type: 'value',
+                    name: '焦虑值',
+                    min: 0,
+                    max: 100,
+                    splitArea: {
+                        show: false
+                    }
+                },
+                dataZoom: [
+                    {
+                        type: 'inside',
+                        xAxisIndex: [0],
+                    },
+                    {
+                        show: true,
+                        height: 20,
+                        type: 'slider',
+                        top: '90%',
+                        xAxisIndex: [0],
+                        showDataShadow: false  //不显示拖拽条的阴影
+                    }
+                    
+                ],
+                series: [
+                    {
+                        name: '焦虑情绪折线图',
+                        data: [],
+                        // tooltip: {
+                        //     formatter: this.formatter,
+                        // },
+                        type: 'line',
+                    }
+                ]
+            },
             echartsData: {
                 legend: {
                     data: ['箱线图', '正向平均情绪折线图', '负向平均情绪折线图']
@@ -65,6 +129,9 @@ export default {
                     nameGap: 30,
                     splitLine: {
                         show: false
+                    },
+                    axisTick: {
+                        show: false
                     }
                 },
                 yAxis: {
@@ -77,7 +144,7 @@ export default {
                     }
                 },
                 dataZoom: [
-                     {
+                    {
                         type: 'inside',
                         xAxisIndex: [0],
                     },
@@ -87,10 +154,13 @@ export default {
                         type: 'slider',
                         top: '90%',
                         xAxisIndex: [0],
-                        showDataShadow: false   //不显示拖拽条的阴影
+                        showDataShadow: false  //不显示拖拽条的阴影
                     }
                     
                 ],
+                // 说明：以下3种属性是优化缩放卡顿问题
+                // sampling:'average',
+                // showAllSymbol: false,
                 series: [
                     {
                         name: '箱线图',
@@ -156,7 +226,9 @@ export default {
                                 //         }
                                 //     })(params)
                                 // },
-                                borderColor: 'black'
+                                borderColor: 'black',
+                                sampling:'average',
+                                showAllSymbol: false,
                             }
                         },
                     },
@@ -173,6 +245,8 @@ export default {
                                 borderColor:'green',
                             }  
                         },
+                        sampling:'average',
+                        showAllSymbol: false,
                     },
                     {//负向向情绪平均值曲线
                         name: '负向平均情绪折线图',
@@ -183,10 +257,12 @@ export default {
                         type: 'line',
                         itemStyle : {  
                             normal : {  
-                                color:'red',
-                                borderColor:'red',
+                                color:'#FFCC00',
+                                borderColor:'#FFCC00',
                             }  
                         },
+                        sampling:'average',
+                        showAllSymbol: false,
                     },
                     {
                         name: '箱线图',
@@ -203,7 +279,9 @@ export default {
                             normal:{
                                 color:"green"
                             },
-                        }
+                        },
+                        sampling:'average',
+                        showAllSymbol: false,
                     },
                     {
                         name: '箱线图',
@@ -218,9 +296,11 @@ export default {
                         stack:'柱状图',
                         itemStyle:{
                             normal:{
-                                color:"red"
+                                color:"#FFCC00"
                             },
-                        }
+                        },
+                        sampling:'average',
+                        showAllSymbol: false,
                     },
                 ]
             }
@@ -236,7 +316,7 @@ export default {
                 '正向情绪最大值: ' + this.echartsData.series[0].data[param.dataIndex][4],
                 '正向情绪平均值 ' + this.echartsData.series[0].data[param.dataIndex][3]
                 + "</span>",
-                "<span style='color:red;'>" +
+                "<span style='color:yellow;'>" +
                 '负向情绪最大值: ' + this.echartsData.series[0].data[param.dataIndex][0],
                 '负向情绪平均值' + this.echartsData.series[0].data[param.dataIndex][1]
                 + "</span>"
@@ -261,9 +341,19 @@ export default {
         this.echartsDivHeight = $(window).height() - $("#otherDiv").height() - 80 -200;
         this.$nextTick(
             ()=>{
-                this.echart = echarts.init(document.getElementById('echartsDiv'))
-                this.echart.showLoading()
+                let anxEcharts = echarts.init(document.getElementById('anxDiv'))
+                anxEcharts.showLoading()
+                let echart = echarts.init(document.getElementById('echartsDiv'))
+                echart.showLoading()
                 getBoxPlotData(this.$route.query.cardNo).then((data) => {
+                    //情绪折线图
+                    this.anxData.xAxis.data = data.result.xData
+                    this.anxData.dataZoom[0].startValue = data.result.xData.length-1>0?data.result.xData.length-1:0;
+                    this.anxData.dataZoom[0].endValue = data.result.xData.length-7>0?data.result.xData.length-7:0;
+                    this.anxData.series[0].data = data.result.seriesAnxLineData
+                    anxEcharts.setOption(this.anxData)
+                    anxEcharts.hideLoading()
+                    //综合图
                     this.echartsData.xAxis.data = data.result.xData;
                     this.echartsData.dataZoom[0].startValue = data.result.xData.length-1>0?data.result.xData.length-1:0;
                     this.echartsData.dataZoom[0].endValue = data.result.xData.length-7>0?data.result.xData.length-7:0;
@@ -273,8 +363,8 @@ export default {
                     this.echartsData.series[3].data = data.result.seriesPositiveLineData;
                     this.echartsData.series[4].data = data.result.seriesNegativeLineData;
                     //this.calcThreshold(data.result.seriesBoxPlotData);
-                    this.echart.setOption(this.echartsData)
-                    this.echart.hideLoading()
+                    echart.setOption(this.echartsData)
+                    echart.hideLoading()
                 })
             }
         )
