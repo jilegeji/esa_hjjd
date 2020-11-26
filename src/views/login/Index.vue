@@ -60,21 +60,8 @@ export default {
     }
   },
   created () {
-    if(!this.isIe()){
-      Message.error('请使用ie浏览器')
-    };
   },
   methods: {
-    /**
-     * 检查浏览器
-     */
-    isIe () {
-      if (window.ActiveXObject || 'ActiveXObject' in window) { // IE
-        return true;
-      } else {
-        return false;
-      }
-    },
     /**
      * 修改密码输入框可见类型
      */
@@ -86,12 +73,7 @@ export default {
      * 登录
      */
     loginHandle () {
-      if(!this.isIe()){
-        Message.error('请使用ie浏览器')
-        return false;
-      };
       this.isDisabled = true
-
       this.$refs.loginForm.validate((valid) => {
         if (valid) {
           loginByNameAndPassword(this.loginForm.username,this.loginForm.password).then(data => {

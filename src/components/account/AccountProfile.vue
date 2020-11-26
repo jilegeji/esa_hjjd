@@ -100,6 +100,16 @@ export default {
         }
     },
     methods: {
+        /**
+         * 检查浏览器
+         */
+        isIe () {
+            if (window.ActiveXObject || 'ActiveXObject' in window) { // IE
+                return true;
+            } else {
+                return false;
+            }
+        },
         cancel () {
             this.$emit('accountProfileClose');
         },
@@ -110,6 +120,10 @@ export default {
             }
         },
         readIDCard() {
+            if(!this.isIe()){
+              Message.warning('请使用ie浏览器')
+              return false;
+            };
             this.loading = true;
             var ret = CVR_IDCard.ReadCard();
             if (ret == "0"){

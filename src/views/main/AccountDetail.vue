@@ -26,8 +26,10 @@
                 </Content>
             </Layout>
         </div>
-            <div id="anxDiv" :style="'height:'+echartsDivHeight+'px;width:90%;margin-left:5%;margin-top:100px;'"></div>
-            <div id="echartsDiv" :style="'height:'+echartsDivHeight+'px;width:90%;margin-left:5%;margin-top:100px;'"></div>
+            <!-- <div id="echartsDiv" :style="'height:'+echartsDivHeight+'px;width:90%;margin-left:5%;margin-top:100px;'"></div>
+            <div id="anxDiv" :style="'height:'+echartsDivHeight+'px;width:90%;margin-left:5%;margin-top:100px;'"></div> -->
+            <div id="echartsDiv" style="height:450px;width:90%;margin-left:5%;margin-top:100px;"></div>
+            <div id="anxDiv" style="height:450px;width:90%;margin-left:5%;margin-top:100px;"></div>
     </div>
 </template>
 <script>
